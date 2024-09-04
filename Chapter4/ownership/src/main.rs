@@ -37,6 +37,27 @@ fn main() {
     let (s2, len) = calculate_length(s1);
 
     println!("The length of '{s2}' is {len}.");
+
+    let mut s1 = String::from("hello");
+
+    let len1 = calculate_length1(&mut s1);
+
+    println!("The length of '{s1}' is {len1}.");
+
+    let r1 = &s1; // no problem
+    let r2 = &s1; // no problem
+    println!("{r1} and {r2}");
+    // variables r1 and r2 will not be used after this point
+
+    let r3 = &mut s1; // no problem
+    println!("{r3}");
+
+    let s = String::from("hello world");
+
+    let word = first_word(&s);
+
+    println!("the first word is: {word}");
+
 }
 // Here, x goes out of scope, then s. But because s's value was moved, nothing
   // special happens.
@@ -75,4 +96,21 @@ fn calculate_length(s: String) -> (String, usize) {
     let length = s.len(); // len() returns the length of a String
 
     (s, length)
+}
+
+fn calculate_length1(s: &mut String) -> usize {
+    s.push_str(", world!");
+    s.len()
+}
+
+fn first_word(s: &String) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[0..s.len()]
 }
