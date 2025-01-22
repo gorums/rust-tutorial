@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 fn main() {
     let inmutable_v: Vec<i32> = Vec::new();
 
@@ -36,6 +38,16 @@ fn main() {
 
     let s = s1 + "-" + &s2 + "-" + &s3;
 
-
     println!("Hello, world!");
+
+    let text = "hello world wonderful world";
+
+    let mut map = HashMap::new();
+
+    for word in text.split_whitespace() {
+        let count = map.entry(word).or_insert(0);
+        *count += 1;
+    }
+
+    println!("{map:?}");
 }
